@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sendmail"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["version", "description"]
+dependencies = [
+    "typer",
+    "pyyaml",
+    "polars",
+    "numpy",
+    "chevron",
+    "jinja2",
+    "pandas",
+    "aiosmtpd",
+]
+
+[project.urls]
+Home = "https://github.com/rs-kellogg/sendmail"
+
+[project.optional-dependencies]
+test = [
+  "pytest",
+]
+lint = [
+  "black",
+  "flake8"
+]
+notebook = [
+    "jupyterlab",
+    "jupyterlab-tabular-data-editor",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+namespaces = true
+where = ["sendmail"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["sendmail"]
+
+[project.scripts]
+sendmail = "sendmail.cli:app"
+
+[tool.setuptools.package-data]
+"sendmail.data" = ["*.yml"]
+
+[tool.hatch.version]
+path = "sendmail/__init__.py"
+
+[tool.black]
+line-length = 160
+
+[tool.isort]
+profile = "black"

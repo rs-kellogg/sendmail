@@ -1,0 +1,5 @@
+from_email,to_email,fname,study_name,study_date,sona_id,send_date
+wkt@northwestern.edu,wkt@northwestern.edu,WillT,Test1,March 1,1,2123-03-10
+wkt@northwestern.edu,wkt@kellogg.northwestern.edu,WillK,Test2,March 2,2,2023-01-01
+wkt@northwestern.edu,rs@kellogg.northwestern.edu,KRS,Test3,March 3,3,2023-01-01
+wkt@northwestern.edu,wkt@northwestern.edu,WillT,Test1,March 1,1,2123-03-10

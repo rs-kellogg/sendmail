@@ -77,16 +77,16 @@ def sendmail(
     Example usage:\n\n
 
     # basic usage, to be run inside project directory:\n
-    blab utils sendmail\n\n
+    sendmail\n\n
 
     # run in test mode:\n
-    blab utils sendmail --test\n\n
+    sendmail --test\n\n
 
     # get this help message:\n
-    blab utils sendmail --help\n\n
+    sendmail --help\n\n
 
     # specify from address and bcc address on command line:\n
-    blab utils sendmail --from expadmin@kellogg.northwestern.edu --bcc expadmin@kellogg.northwestern.edu
+    sendmail --from expadmin@kellogg.northwestern.edu --bcc expadmin@kellogg.northwestern.edu
     """
 
     # data file for bulk email sending

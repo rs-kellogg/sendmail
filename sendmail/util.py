@@ -133,13 +133,15 @@ def send_emails(
     :return:
     """
     sent_messages = {hash_message(m): m for m in mbox}
-    today = datetime.datetime.today().strftime("%Y-%m-%d")
-    email_data["send_date_passed"] = email_data["send_date"] <= today
+    email_data["send_date_passed"] = email_data["send_date"] <= pd.to_datetime("today")
     records = email_data.to_dict(orient="records")
     with smtplib.SMTP(smtp_server, port) as server:
         for r in records:
             m = create_message(template, r)
             if not m:
+                warning = "No message generated"
+                console.print(f"[bold yellow]{warning}")
+                logging.warning(warning)
                 continue
             if hash_message(m) in sent_messages and not force:
                 warning = f"Refusing to send duplicate email to address: {m['To']}"

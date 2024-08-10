@@ -6,12 +6,15 @@ from typing import Dict
 from rich.console import Console
 import jinja2
 import email
+from email import encoders
 from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 import mailbox
 import re
 import time
 import subprocess
+from pathlib import Path
 import datetime
 
 
@@ -64,6 +67,16 @@ def create_message(template: jinja2.Template, record: Dict) -> email.message.Mes
     message.attach(MIMEText(text, "plain"))
     if html:
         message.attach(MIMEText(html, "html"))
+        
+    if 'attachments' in record:
+        for file in record['attachments']:
+            part = MIMEBase('application', "octet-stream")
+            with open(file, 'rb') as f:
+                part.set_payload(f.read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition',
+                            'attachment; filename={}'.format(Path(file).name))
+            message.attach(part)
 
     return message
 

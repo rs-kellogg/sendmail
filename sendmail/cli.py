@@ -104,6 +104,13 @@ def sendmail(
     required_columns = ["to_email", "from_email", "send_date"]
     for col in required_columns:
         assert col in email_data.columns, f"File {data_file} does not contain a column named '{col}'."
+    
+    if 'attachments' in email_data.columns:
+        email_data['attachments'] = email_data['attachments'].fillna('')\
+                                    .apply(lambda x: [proj_dir / y.strip() for y in x.split('|')])\
+                                    .apply(lambda x: [y.as_posix() for y in x if y.is_file()])
+    else:
+        email_data['attachments'] = [[] for _ in range(len(email_data))]
 
     # template file for bulk email sending
     template_file = proj_dir / "email-template.jinja2"
@@ -152,7 +159,7 @@ def sendmail(
         )
     except Exception as e:
         error = f"Error sending emails: {e}"
-        console.print(f"[red]{error}")
+        typer.secho(f"[red]{error}")
         logging.error(error)
     finally:
         box.close()

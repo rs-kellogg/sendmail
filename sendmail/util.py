@@ -100,7 +100,7 @@ def hash_message(message: MIMEMultipart) -> int:
     :param message:
     :return:
     """
-    return hash(message["To"] + message["From"] + message["Subject"] + "".join([str(p) for p in message.get_payload()]))
+    return hash(str(message["To"]) + str(message["From"]) + str(message["Subject"]) + "".join([str(p) for p in message.get_payload()]))
 
 
 def start_debug_server(port: int = 8025) -> subprocess.Popen:

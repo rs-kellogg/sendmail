@@ -16,6 +16,7 @@ import time
 import subprocess
 from pathlib import Path
 import datetime
+import time
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -134,6 +135,7 @@ def send_emails(
     port: int,
     mbox: mailbox.mbox,
     force: bool,
+    delay: int = 0
 ) -> None:
     """
     Send emails from a dataframe of email data and a jinja2.Template object.
@@ -143,6 +145,7 @@ def send_emails(
     :param port:
     :param mbox:
     :param force:
+    :param delay
     :return:
     """
     sent_messages = {hash_message(m): m for m in mbox}
@@ -168,4 +171,6 @@ def send_emails(
                 console.print(f"[bold green]{info}")
                 logging.info(info)
                 server.send_message(m)
+                if delay:
+                    time.sleep(delay)
                 sent_messages[hash_message(m)] = m

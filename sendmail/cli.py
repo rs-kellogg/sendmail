@@ -50,6 +50,11 @@ def sendmail(
         "--test",
         help="Test run using debug server. Copies of emails sent are saved to an mbox-test file in the proj directory.",
     ),
+    delay: Optional[int] = typer.Option(
+        0,
+        "--delay",
+        help="Time in seconds to delay between sending each email"
+    )
 ):
     """
     Send emails to recipients using data from a CSV file and an email template file.
@@ -156,10 +161,11 @@ def sendmail(
             port=port,
             mbox=box,
             force=force,
+            delay=delay,
         )
     except Exception as e:
         error = f"Error sending emails: {e}"
-        typer.secho(f"[red]{error}")
+        print(error)
         logging.error(error)
     finally:
         box.close()
